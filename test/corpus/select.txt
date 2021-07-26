@@ -1,0 +1,224 @@
+===
+Select single literal no table
+===
+
+SELECT 1
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (literal_value
+        (numeric_literal)))))
+
+===
+Select multiple literals no table
+===
+
+SELECT 1, 2, 3
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (result_column
+      (literal_value
+        (numeric_literal)))))
+
+===
+Select star no table
+===
+
+SELECT *
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column)))
+
+===
+Select one column no table
+===
+
+SELECT id
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))))
+
+===
+Select multiple columns no table
+===
+
+SELECT id, first_name, last_name
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (result_column
+      (column_name))
+    (result_column
+      (column_name))))
+
+===
+Select single literal from table
+===
+
+SELECT 1 from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select multiple literals from table
+===
+
+SELECT 1, 2, 3 from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select star from table
+===
+
+SELECT * from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column)
+    (table_or_subquery
+      (table_name))))
+
+===
+Select one column from table
+===
+
+SELECT id from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select multiple columns from table
+===
+
+SELECT id, first_name, last_name from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (result_column
+      (column_name))
+    (result_column
+      (column_name))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select column name alias
+===
+
+SELECT id as my_id from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name)
+      (column_alias))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select column name alias without as
+===
+
+SELECT id my_id from users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name)
+      (column_alias))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select table name alias
+===
+
+SELECT id from users u
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (table_or_subquery
+      (table_name)
+      (table_alias))))
+
+===
+Select table name alias without as
+===
+
+SELECT id from users as u
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (table_or_subquery
+      (table_name)
+      (table_alias))))

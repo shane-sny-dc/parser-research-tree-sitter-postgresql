@@ -1,0 +1,19 @@
+{
+  "name": "tree-sitter-postgresql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bindings/node",
+  "scripts": {
+    "build": "node-gyp build",
+    "generate": "tree-sitter generate",
+    "test": "npm run generate && tree-sitter test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nan": "^2.14.2"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.17.1"
+  }
+}

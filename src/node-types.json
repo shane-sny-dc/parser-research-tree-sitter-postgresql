@@ -1,0 +1,317 @@
+[
+  {
+    "type": "column_alias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "column_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "index_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "literal_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "numeric_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "numeric_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "result_column",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "column_alias",
+          "named": true
+        },
+        {
+          "type": "column_name",
+          "named": true
+        },
+        {
+          "type": "literal_value",
+          "named": true
+        },
+        {
+          "type": "schema_name",
+          "named": true
+        },
+        {
+          "type": "table_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "schema_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_stmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "result_column",
+          "named": true
+        },
+        {
+          "type": "table_or_subquery",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "sql_stmt_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "select_stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "table_alias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_or_subquery",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "index_name",
+          "named": true
+        },
+        {
+          "type": "schema_name",
+          "named": true
+        },
+        {
+          "type": "table_alias",
+          "named": true
+        },
+        {
+          "type": "table_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "\"\"",
+    "named": false
+  },
+  {
+    "type": "'",
+    "named": false
+  },
+  {
+    "type": "''",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": "0x",
+    "named": false
+  },
+  {
+    "type": ";",
+    "named": false
+  },
+  {
+    "type": "ALL",
+    "named": false
+  },
+  {
+    "type": "AS",
+    "named": false
+  },
+  {
+    "type": "BY",
+    "named": false
+  },
+  {
+    "type": "DISTINCT",
+    "named": false
+  },
+  {
+    "type": "E",
+    "named": false
+  },
+  {
+    "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "INDEXED",
+    "named": false
+  },
+  {
+    "type": "NOT",
+    "named": false
+  },
+  {
+    "type": "SELECT",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "`",
+    "named": false
+  },
+  {
+    "type": "``",
+    "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
+  }
+]
