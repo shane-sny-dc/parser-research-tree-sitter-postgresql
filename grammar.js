@@ -1,5 +1,5 @@
 /**
- * Create a case-insensitive token for a given string
+ * Create a case-insensitive token for a given string.
  */
 const i = (str) => {
   return alias(
@@ -15,12 +15,24 @@ const i = (str) => {
   );
 };
 
+/**
+ * Create a case-insensitive reserved word.
+ *
+ * This simply gives the word higher precedence which should help the parser
+ * not identify it as an identifier.
+ */
+const iReserved = (str) => {
+  return prec(2, i(str));
+};
+
 module.exports = grammar({
   name: "postgresql",
 
   extras: ($) => [$.comment, /\s/],
 
   inline: ($) => [$.sql_stmt],
+
+  word: ($) => $._word,
 
   rules: {
     sql_stmt_list: ($) =>
@@ -39,23 +51,23 @@ module.exports = grammar({
 
     select_stmt: ($) =>
       seq(
-        i("SELECT"),
-        optional(choice(i("DISTINCT"), i("ALL"))),
+        iReserved("SELECT"),
+        optional(choice(iReserved("DISTINCT"), iReserved("ALL"))),
         $.result_column,
         repeat(seq(",", $.result_column)),
-        optional(seq(i("FROM"), $.table_or_subquery))
+        optional(seq(iReserved("FROM"), $.table_or_subquery))
       ),
 
     table_or_subquery: ($) =>
       choice(
         seq(
-          optional(seq($.schema_name, ".")),
+          optional(seq($.schema_name, token.immediate("."))),
           $.table_name,
-          optional(seq(optional(i("AS")), $.table_alias)),
+          optional(seq(optional(iReserved("AS")), $.table_alias)),
           optional(
             choice(
-              seq(i("INDEXED"), i("BY"), $.index_name),
-              seq(i("NOT"), i("INDEXED"))
+              seq(iReserved("INDEXED"), iReserved("BY"), $.index_name),
+              seq(iReserved("NOT"), iReserved("INDEXED"))
             )
           )
         )
@@ -70,8 +82,8 @@ module.exports = grammar({
     result_column: ($) =>
       choice(
         "*",
-        seq($.table_name, ".", "*"),
-        seq($._expr, optional(seq(optional(i("AS")), $.column_alias)))
+        seq($._expr, optional(seq(optional(i("AS")), $.column_alias))),
+        seq($.table_name, token.immediate("."), "*")
       ),
 
     // TODO - tonnes missing from expr
@@ -79,11 +91,14 @@ module.exports = grammar({
       choice(
         $.literal_value,
         seq(
-          optional(
-            seq(optional(seq($.schema_name, ".")), seq($.table_name, "."))
-          ),
+          $.schema_name,
+          token.immediate("."),
+          $.table_name,
+          token.immediate("."),
           $.column_name
-        )
+        ),
+        seq($.table_name, token.immediate("."), $.column_name),
+        $.column_name
       ),
 
     column_alias: ($) => choice($._identifier, $.string_literal),
@@ -115,20 +130,25 @@ module.exports = grammar({
       choice(
         seq(
           choice(
-            seq(repeat1(/[0-9]/), optional(seq(".", repeat(/[0-9]/)))),
-            seq(".", repeat1(/[0-9]/))
+            seq(
+              repeat1(/[0-9]/),
+              optional(seq(token.immediate("."), repeat(/[0-9]/)))
+            ),
+            seq(token.immediate("."), repeat1(/[0-9]/))
           ),
           optional(seq(i("E"), optional(choice("-", "+")), repeat1(/[0-9]/)))
         ),
         seq("0x", /[0-9a-fA-F]/)
       ),
 
+    _word: () => /[a-zA-Z_]+[a-zA-Z_0-9]*/,
+
     _identifier: ($) =>
       choice(
         seq('"', repeat(choice(/[^"]/, '""')), '"'),
         seq("`", repeat(choice(/[^`]/, "``")), "`"),
         seq("[", repeat(/[~\]]/), "]"),
-        seq(/[a-zA-Z_]+/, repeat(/[a-zA-Z_0-9]/))
+        $._word
       ),
 
     _name: ($) =>
