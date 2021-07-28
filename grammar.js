@@ -91,14 +91,11 @@ module.exports = grammar({
       choice(
         $.literal_value,
         seq(
-          $.schema_name,
-          token.immediate("."),
-          $.table_name,
-          token.immediate("."),
+          optional(
+            seq(optional(seq($.schema_name, ".")), seq($.table_name, "."))
+          ),
           $.column_name
-        ),
-        seq($.table_name, token.immediate("."), $.column_name),
-        $.column_name
+        )
       ),
 
     column_alias: ($) => choice($._identifier, $.string_literal),

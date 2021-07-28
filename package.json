@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node-gyp build",
     "generate": "tree-sitter generate",
+    "playground": "tree-sitter generate && sudo tree-sitter build-wasm && tree-sitter playground",
     "test": "npm run generate && tree-sitter test"
   },
   "author": "",

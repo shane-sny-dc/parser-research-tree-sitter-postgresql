@@ -13,6 +13,20 @@ SELECT 1
         (numeric_literal)))))
 
 ===
+Select from no specified table
+===
+
+SELECT id FROM
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name)))
+  (ERROR))
+
+===
 Select multiple literals no table
 ===
 
@@ -78,7 +92,7 @@ SELECT id, first_name, last_name
 Select single literal from table
 ===
 
-SELECT 1 from users
+SELECT 1 FROM users
 
 ---
 
@@ -94,7 +108,7 @@ SELECT 1 from users
 Select multiple literals from table
 ===
 
-SELECT 1, 2, 3 from users
+SELECT 1, 2, 3 FROM users
 
 ---
 
@@ -116,7 +130,7 @@ SELECT 1, 2, 3 from users
 Select star from table
 ===
 
-SELECT * from users
+SELECT * FROM users
 
 ---
 
@@ -130,7 +144,7 @@ SELECT * from users
 Select one column from table
 ===
 
-SELECT id from users
+SELECT id FROM users
 
 ---
 
@@ -145,7 +159,7 @@ SELECT id from users
 Select multiple columns from table
 ===
 
-SELECT id, first_name, last_name from users
+SELECT id, first_name, last_name FROM users
 
 ---
 
@@ -164,7 +178,7 @@ SELECT id, first_name, last_name from users
 Select column name alias
 ===
 
-SELECT id as my_id from users
+SELECT id as my_id FROM users
 
 ---
 
@@ -180,7 +194,7 @@ SELECT id as my_id from users
 Select column name alias without as
 ===
 
-SELECT id my_id from users
+SELECT id my_id FROM users
 
 ---
 
@@ -196,7 +210,7 @@ SELECT id my_id from users
 Select table name alias
 ===
 
-SELECT id from users u
+SELECT id FROM users u
 ---
 
 (sql_stmt_list
@@ -211,7 +225,7 @@ SELECT id from users u
 Select table name alias without as
 ===
 
-SELECT id from users as u
+SELECT id FROM users as u
 
 ---
 
@@ -222,3 +236,34 @@ SELECT id from users as u
     (table_or_subquery
       (table_name)
       (table_alias))))
+
+===
+Select column in quotes from table
+===
+
+SELECT "id" FROM users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (table_or_subquery
+      (table_name))))
+
+===
+Select column from schema.table
+===
+
+SELECT id FROM schema.users
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (column_name))
+    (table_or_subquery
+      (schema_name)
+      (table_name))))
