@@ -1,5 +1,8 @@
+/// <reference path="node_modules/tree-sitter-cli/dsl.d.ts" />
+
 /**
  * Create a case-insensitive token for a given string.
+ * @param {string} str
  */
 const i = (str) => {
   return alias(
@@ -20,6 +23,8 @@ const i = (str) => {
  *
  * This simply gives the word higher precedence which should help the parser
  * not identify it as an identifier.
+ *
+ * @param {string} str
  */
 const iReserved = (str) => {
   return prec(2, i(str));
@@ -81,26 +86,19 @@ module.exports = grammar({
 
     result_column: ($) =>
       choice(
-        "*",
         seq($._expr, optional(seq(optional(i("AS")), $.column_alias))),
-        seq($.table_name, token.immediate("."), "*")
       ),
 
     // TODO - tonnes missing from expr
     _expr: ($) =>
       choice(
         $.literal_value,
-        seq(
-          optional(
-            seq(optional(seq($.schema_name, ".")), seq($.table_name, "."))
-          ),
-          $.column_name
-        )
+        $.column_ref
       ),
 
     column_alias: ($) => choice($._identifier, $.string_literal),
 
-    schema_name: ($) => prec(1, $._name),
+    schema_name: ($) => $._name,
 
     table_name: ($) => $._name,
 
@@ -109,6 +107,25 @@ module.exports = grammar({
     index_name: ($) => $._name,
 
     column_name: ($) => $._name,
+
+    schema_table_column_name: ($) => seq($._name, token.immediate("."), $._name, token.immediate("."), $._name),
+
+    table_column_name: ($) => seq($._name, token.immediate("."), $._name),
+
+    all_schema_table_column_name: ($) => seq($._name, token.immediate("."), $._name, token.immediate("."), token.immediate("*")),
+
+    all_table_column_name: ($) => seq($._name, token.immediate("."), token.immediate("*")),
+
+    all_column_name: () => "*",
+
+    column_ref: ($) => choice(
+      $.all_column_name,
+      $.column_name,
+      $.table_column_name,
+      $.all_table_column_name,
+      $.schema_table_column_name,
+      $.all_schema_table_column_name,
+    ),
 
     string_literal: () => seq("'", repeat(choice(/[^']/, "''")), "'"),
 

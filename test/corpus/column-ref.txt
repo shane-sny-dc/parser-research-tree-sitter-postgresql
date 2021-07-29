@@ -1,0 +1,71 @@
+===
+Select column-ref
+===
+
+SELECT
+  1,
+  *,
+  t.*,
+  s.t.*,
+  c,
+  t.c,
+  s.t.c
+  1 as c1,
+  * as c2,
+  t.* as c3,
+  s.t.* as c4,
+  c as c5,
+  t.c as c6,
+  s.t.c as c7
+
+---
+
+(sql_stmt_list
+  (select_stmt
+    (result_column
+      (literal_value
+        (numeric_literal)))
+    (result_column
+      (column_ref
+        (all_column_name)))
+    (result_column
+      (column_ref
+        (all_table_column_name)))
+    (result_column
+      (column_ref
+        (all_schema_table_column_name)))
+    (result_column
+      (column_ref
+        (column_name)))
+    (result_column
+      (column_ref
+        (table_column_name)))
+    (result_column
+      (column_ref
+        (schema_table_column_name))
+      (ERROR)
+      (column_alias))
+    (result_column
+      (column_ref
+        (all_column_name))
+      (column_alias))
+    (result_column
+      (column_ref
+        (all_table_column_name))
+      (column_alias))
+    (result_column
+      (column_ref
+        (all_schema_table_column_name))
+      (column_alias))
+    (result_column
+      (column_ref
+        (column_name))
+      (column_alias))
+    (result_column
+      (column_ref
+        (table_column_name))
+      (column_alias))
+    (result_column
+      (column_ref
+        (schema_table_column_name))
+      (column_alias))))
